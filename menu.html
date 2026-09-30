@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>LunaCheck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: radial-gradient(ellipse at center, #0f172a 0%, #020617 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Efecto estrellas sutiles */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 40px, #ddd, transparent),
+                radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 30px, #eee, transparent),
+                radial-gradient(1px 1px at 200px 60px, #ddd, transparent),
+                radial-gradient(2px 2px at 250px 20px, #fff, transparent),
+                radial-gradient(1px 1px at 300px 90px, #eee, transparent),
+                radial-gradient(2px 2px at 350px 50px, #fff, transparent);
+            background-repeat: no-repeat;
+            animation: twinkle 4s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 360px;
+            width: 100%;
+            z-index: 1;
+        }
+        .header {
+            text-align: center;
+            color: #e2c488;
+            margin-bottom: 10px;
+        }
+        .header .logo {
+            font-size: 42px;
+            margin-bottom: 5px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #f5d78c, #b68b40);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-top: 4px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 8px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn:active {
+            transform: scale(0.96);
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        .btn:active::after {
+            opacity: 1;
+        }
+        .btn .icon {
+            font-size: 20px;
+            filter: drop-shadow(0 0 4px rgba(255,215,0,0.5));
+        }
+        .btn-cerrar {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 100, 100, 0.3);
+            width: 60%;
+            grid-column: span 2;
+            justify-self: center;
+            color: #ffaaaa;
+        }
+        .btn-cerrar .icon {
+            filter: drop-shadow(0 0 4px rgba(255,100,100,0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌙</div>
+            <h1>LunaCheck</h1>
+            <p>Tu portal de confianza</p>
+        </div>
+        <div class="grid">
+            <button class="btn" onclick="sendData('perfil')">
+                <span class="icon">👤</span> Perfil
+            </button>
+            <button class="btn" onclick="sendData('tools')">
+                <span class="icon">⚙️</span> Tools
+            </button>
+            <button class="btn" onclick="sendData('gates_renta')">
+                <span class="icon">💎</span> Gates Renta
+            </button>
+            <button class="btn" onclick="sendData('gates_creditos')">
+                <span class="icon">💠</span> Gates Créditos
+            </button>
+            <button class="btn" onclick="sendData('precios')">
+                <span class="icon">💰</span> Precios
+            </button>
+            <button class="btn" onclick="sendData('killerrats')">
+                <span class="icon">🐀</span> KillerRats
+            </button>
+            <button class="btn btn-cerrar" onclick="Telegram.WebApp.close()">
+                <span class="icon">❌</span> Cerrar
+            </button>
+        </div>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function sendData(action) {
+            tg.sendData(action);
+            tg.close();
+        }
+    </script>
+</body>
+</html>
